@@ -10,13 +10,15 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="linux">
+  <meta name="description" content="If you do any kind of coding, you likely have worked with command line of some sort. The most common scenario for using commandline is probably navigating through directories and using git. It is not">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Basic Linux commands that will make your life more efficient">
 <meta property="og:url" content="https:&#x2F;&#x2F;xiawei918.github.io&#x2F;2019&#x2F;12&#x2F;02&#x2F;Basic-Linux-commands-that-will-make-your-life-more-efficient&#x2F;index.html">
 <meta property="og:site_name" content="Wei&#39;s Sandbox">
+<meta property="og:description" content="If you do any kind of coding, you likely have worked with command line of some sort. The most common scenario for using commandline is probably navigating through directories and using git. It is not">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-02T20:40:46.820Z">
+<meta property="og:updated_time" content="2019-12-05T06:57:26.602Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Wei&#39;s Sandbox" type="application/atom+xml">
@@ -223,7 +225,55 @@ ga('send', 'pageview');
   
   <div class="article-entry" itemprop="articleBody">
     
-    
+    <p>If you do any kind of coding, you likely have worked with command line of some sort. The most common scenario for using commandline is probably navigating through directories and using git. It is not unusual that you utilize either the default Mac terminal or iterm for everyday work. If you are using terminal everyday, chances are you are already quite comfortable navigating between commands like <code>ls</code>, <code>cd</code>, and <code>pwd</code>. Linux command line is a very powerful tool which will make you more efficient, and with a deep knowledge of linux command you will come up with more creative solutions for your tasks. </p>
+<p>In this post, I will try to go a little bit deeper into some commands that are not used everyday, but could be utilized easily to make you more efficient. </p>
+<p>Using <code>cd</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>   <span class="comment"># go to home</span></span><br><span class="line"><span class="built_in">cd</span> - <span class="comment"># go back to previous directory</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>ls</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ls -l  <span class="comment"># longer description of all files in current dir</span></span><br><span class="line">ls -a  <span class="comment"># also show hidden files i.e. .DS_Store</span></span><br><span class="line">ls -lS <span class="comment"># list files in decreasing size order</span></span><br><span class="line">ls all* <span class="comment"># list all files that starts with "all"</span></span><br><span class="line">ls all*e* <span class="comment"># list all files that starts with "all" and includes an "e" somewhere in the name</span></span><br><span class="line">ls [a-z]* <span class="comment"># list all files that startes with lower case a-z</span></span><br><span class="line">ls [abc]* <span class="comment"># list all files that startes with lower case a,b, or c</span></span><br><span class="line">ls &#123;a,b,c&#125;* <span class="comment"># similar as above</span></span><br><span class="line">ls <span class="built_in">test</span>[012]* <span class="comment"># list all files that starts with "test" and follows with either 0, 1 or 2</span></span><br><span class="line">ls <span class="built_in">test</span>&#123;0..3&#125; <span class="comment">#list all files which are "test0", "test1", "test2", "test3"</span></span><br><span class="line">ls !$ <span class="comment"># list last item on last command you entered. ! - last command, $ - last thing</span></span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<p>Using <code>find</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find ./<span class="built_in">test</span> -name sample.py   <span class="comment"># find file named "sample.py" in dir "test"</span></span><br><span class="line">find ./<span class="built_in">test</span> -name *.py   <span class="comment"># find file with ".py" suffix in dir "test"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>Using <code>grep</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep [word] [myfile] <span class="comment"># return lines that contains [word] in file [myfile]</span></span><br><span class="line">grep -v [word] [myfile] <span class="comment"># return lines that does not contain [word] in file [myfile]</span></span><br><span class="line">grep -i <span class="comment"># -i indicates case insensitive</span></span><br><span class="line">grep [word] * <span class="comment"># find all lines that contains [word] in all files</span></span><br><span class="line">grep -l [word] * <span class="comment"># only list files that contains [word]</span></span><br></pre></td></tr></table></figure>
+
+<p>Using pipe</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls | grep -v <span class="built_in">test</span> <span class="comment"># list all files in current dir that does not contain "test" in their name</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>wc</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wc test.txt <span class="comment"># count number of words in "test.txt"</span></span><br><span class="line">wc -l test.txt <span class="comment"># count number of lines in "test.txt"</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>split</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">split -l 1000 test.txt <span class="comment"># split "test.py" into files where each has 1000 lines</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>rev</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rev file <span class="comment"># reverse each line of file</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>sort</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort file <span class="comment"># sort each line of file</span></span><br><span class="line">sort -n file <span class="comment"># sort each line of file by numbers at the beginning of line</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>cut</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cut -d= -f2 test.txt <span class="comment"># split each line by delimiter of "=" and take second field</span></span><br><span class="line">cut -d<span class="string">" "</span> -f2 test.txt <span class="comment"># split each line by delimiter of single space and take second field</span></span><br><span class="line">cut -d<span class="string">" "</span> -f1-3,5 test.txt <span class="comment"># split each line by delimiter of single space and take first, second, third, and fifth field</span></span><br><span class="line">cut -d$<span class="string">'\t'</span> -f2- test.txt <span class="comment"># split each line by delimiter of tab and take all fields after second field</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>awk</code><br>awk split the lines by space by default</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -F\" <span class="string">'&#123;print $1&#125;'</span> <span class="comment"># print first field of each line splitted by '"'</span></span><br><span class="line">awk -F\" <span class="string">'&#123;print $NF&#125;'</span>  <span class="comment"># print last field of each line splitted by '"'</span></span><br><span class="line">awk -F\" <span class="string">'&#123;print $(NF-1)&#125;'</span>  <span class="comment"># print second to last field of each line splitted by '"'</span></span><br><span class="line">awk -F\" /]/<span class="string">'&#123;print $(NF-1)&#125;'</span>  <span class="comment"># greping lines that contains "]" and print second to last field of each line splitted by '"'</span></span><br><span class="line">awk -F\" /target/<span class="string">'&#123;print $(NF-1) + $(NF)&#125;'</span>  <span class="comment"># get lines that contains "target", split it by '"', print the sum of second last and last element</span></span><br></pre></td></tr></table></figure>
+
+<p>Using <code>sed</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">'s/test//g'</span> sample.txt <span class="comment"># replace "test" in each line of sample.txt with empty string globally</span></span><br><span class="line">sed <span class="string">'s/test//'</span> sample.txt <span class="comment"># replace first instance of "test" in each line of sample.txt with empty string</span></span><br></pre></td></tr></table></figure>
+
+<p>Define variables</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=lol</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$a</span> <span class="comment"># lol</span></span><br><span class="line"></span><br><span class="line">a=$(ls folder) <span class="comment"># variable a is all files in folder</span></span><br></pre></td></tr></table></figure>
+<p>for loops</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> $(ls folder); <span class="keyword">do</span> <span class="built_in">echo</span> <span class="string">"hi"</span>,<span class="variable">$file</span>; <span class="built_in">echo</span> no; <span class="keyword">done</span> <span class="comment"># prints all files in folder in the format "hi, [file]" and "no"</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
     
 
     
@@ -320,15 +370,6 @@ ga('send', 'pageview');
 
 
 <nav id="article-nav">
-  
-    <a href="/2019/12/02/Tips-on-using-hexo-deploy/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Tips on using hexo deploy
-        
-      </div>
-    </a>
   
   
     <a href="/2019/12/02/Build-your-own-blog-with-Hexo/" id="article-nav-older" class="article-nav-link-wrap">
@@ -478,11 +519,11 @@ ga('send', 'pageview');
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
