@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Wei&#39;s Sandbox">
 <meta property="og:description" content="If you do any kind of coding, you likely have worked with command line of some sort. The most common scenario for using commandline is probably navigating through directories and using git. It is not">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-05T06:57:26.602Z">
+<meta property="og:updated_time" content="2019-12-08T00:48:02.610Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Wei&#39;s Sandbox" type="application/atom+xml">
@@ -269,7 +269,8 @@ ga('send', 'pageview');
 <p>for loops</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> $(ls folder); <span class="keyword">do</span> <span class="built_in">echo</span> <span class="string">"hi"</span>,<span class="variable">$file</span>; <span class="built_in">echo</span> no; <span class="keyword">done</span> <span class="comment"># prints all files in folder in the format "hi, [file]" and "no"</span></span><br></pre></td></tr></table></figure>
 
-
+<p>if statements</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -n <span class="variable">$a</span> ] ; <span class="keyword">then</span> <span class="built_in">echo</span> hi ; <span class="keyword">fi</span> <span class="comment"># print hi if variable a is nonzero length</span></span><br><span class="line"><span class="keyword">if</span> [ ! -z <span class="variable">$a</span> ] ; <span class="keyword">then</span> <span class="built_in">echo</span> hi ; <span class="keyword">fi</span> <span class="comment"># print hi if variable a is not zero length</span></span><br><span class="line"><span class="keyword">if</span> [ -e test.py ] ; <span class="keyword">then</span> <span class="built_in">echo</span> hi ; <span class="keyword">fi</span> <span class="comment"># print hi if file test.py exists</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -519,11 +520,11 @@ ga('send', 'pageview');
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
               </li>
             
             <div class="clearfix"></div>
