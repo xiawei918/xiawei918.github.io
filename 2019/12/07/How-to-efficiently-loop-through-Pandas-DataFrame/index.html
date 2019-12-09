@@ -20,7 +20,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;WEJs6pS.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;tUgpvxR.png">
-<meta property="og:updated_time" content="2019-12-09T02:50:38.102Z">
+<meta property="og:updated_time" content="2019-12-09T02:55:30.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;WEJs6pS.png">
   
@@ -339,7 +339,7 @@ ga('send', 'pageview');
 <h3 id="iterrows"><a href="#iterrows" class="headerlink" title="iterrows"></a>iterrows</h3><p>For readers who are interested, this is the <a href="https://github.com/pandas-dev/pandas/blob/v0.25.3/pandas/core/frame.py#L860" target="_blank" rel="noopener">iterrows source code</a> for <code>iterrows</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">columns = self.columns</span><br><span class="line">klass = self._constructor_sliced</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> zip(self.index, self.values):</span><br><span class="line">    s = klass(v, index=columns, name=k)</span><br><span class="line">    <span class="keyword">yield</span> k, s</span><br></pre></td></tr></table></figure>
 <p>The <code>klass</code> object here is actually the Series class. And it is interesting to see that <code>iterrows</code> also uses <code>zip</code>, except it is using it to create Series by zipping index and values together. This partly explains why <code>zip</code> beats <code>iterrows</code> by so much.</p>
-<h3 id="itertuples"><a href="#itertuples" class="headerlink" title="itertuples"></a>itertuples</h3><p>For readers who are interested, this is the <a href="https://github.com/pandas-dev/pandas/blob/v0.25.3/pandas/core/frame.py#L912" target="_blank" rel="noopener">itertuples source code</a> for <code>iterrows</code></p>
+<h3 id="itertuples"><a href="#itertuples" class="headerlink" title="itertuples"></a>itertuples</h3><p>For readers who are interested, this is the <a href="https://github.com/pandas-dev/pandas/blob/v0.25.3/pandas/core/frame.py#L912" target="_blank" rel="noopener">itertuples source code</a> for <code>itertuples</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">arrays = []</span><br><span class="line">fields = list(self.columns)</span><br><span class="line"><span class="keyword">if</span> index:</span><br><span class="line">    arrays.append(self.index)</span><br><span class="line">    fields.insert(<span class="number">0</span>, <span class="string">"Index"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># use integer indexing because of possible duplicate column names</span></span><br><span class="line">arrays.extend(self.iloc[:, k] <span class="keyword">for</span> k <span class="keyword">in</span> range(len(self.columns)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Python 3 supports at most 255 arguments to constructor</span></span><br><span class="line"><span class="keyword">if</span> name <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> len(self.columns) + index &lt; <span class="number">256</span>:</span><br><span class="line">    itertuple = collections.namedtuple(name, fields, rename=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> map(itertuple._make, zip(*arrays))</span><br><span class="line"></span><br><span class="line"><span class="comment"># fallback to regular tuples</span></span><br><span class="line"><span class="keyword">return</span> zip(*arrays)</span><br></pre></td></tr></table></figure>
 
 <h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>For readers who are interested, this is the <a href="https://docs.python.org/3/library/functions.html#zip" target="_blank" rel="noopener">zip source code</a> for python’s <code>zip</code> function</p>
@@ -593,11 +593,11 @@ ga('send', 'pageview');
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
