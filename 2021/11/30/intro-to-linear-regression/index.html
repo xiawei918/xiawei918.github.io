@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://xiawei918.github.io">
-  <title>Category: tech | Wei&#39;s Sandbox</title>
+  <title>Introduction To Linear Regression: All You Need To Know About Linear Regression | Wei&#39;s Sandbox</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Wei&#39;s Sandbox">
-<meta property="og:url" content="https:&#x2F;&#x2F;xiawei918.github.io&#x2F;categories&#x2F;tech&#x2F;index.html">
+  <meta name="description" content="Linear regression is usually the first model one will learn in a machine learning course due to its simplicity and popularity. While the idea of linear regression seems straight forward and easily und">
+<meta name="keywords" content="Machine Learning,Linear Regression">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction To Linear Regression: All You Need To Know About Linear Regression">
+<meta property="og:url" content="https:&#x2F;&#x2F;xiawei918.github.io&#x2F;2021&#x2F;11&#x2F;30&#x2F;intro-to-linear-regression&#x2F;index.html">
 <meta property="og:site_name" content="Wei&#39;s Sandbox">
+<meta property="og:description" content="Linear regression is usually the first model one will learn in a machine learning course due to its simplicity and popularity. While the idea of linear regression seems straight forward and easily und">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;P3GaThF.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;d6ZJpPP.png">
+<meta property="og:updated_time" content="2021-12-03T03:22:50.366Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.imgur.com&#x2F;P3GaThF.png">
   
     <link rel="alternative" href="/atom.xml" title="Wei&#39;s Sandbox" type="application/atom+xml">
   
@@ -194,41 +201,86 @@ ga('send', 'pageview');
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-intro-to-linear-regression" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/11/30/intro-to-linear-regression/" class="archive-article-date">
-        <time datetime="2021-12-01T05:09:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/11/30/intro-to-linear-regression/" target="_blank">Introduction To Linear Regression: All You Need To Know About Linear Regression</a>
   
+    <h1 class="article-title" itemprop="name">
+      Introduction To Linear Regression: All You Need To Know About Linear Regression
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
+  
+  
+<a href="/2021/11/30/intro-to-linear-regression/" class="archive-article-date">
+        <time datetime="2021-12-01T05:09:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Linear regression is usually the first model one will learn in a machine learning course due to its simplicity and popularity. While the idea of linear regression seems straight forward and easily understandable, there are many details around linear regression that are often overlooked but are important to know for ML practitioners. This article aims to provide couple of different perspectives on linear regression, what are its assumptions and why are those assumptions necesary, and go over some topics including multicolinearity and confidence intervals.</p>
+<h1 id="The-basics"><a href="#The-basics" class="headerlink" title="The basics"></a>The basics</h1><p>Let’s start with the basics. Suppose we have a set of $n$ data points, each with $k$ features, and we denote it as $X\in R^{n\times p}$. And we have a target vector we would like to predict, denoted as $Y\in R^n$. A concrete example could be $Y$ is the sale price of $n$ different homes, and $X$ are features collected for each of the homes (sqft, number of bedrooms, etc). </p>
+<p>Assuming that the relationship between $Y$ and $X$ is a function<br>of the form $$Y = f(X) + \epsilon,$$<br>where $\epsilon\in R^n$ is a random variable with zero mean that captures the random noise in data. We can approximate $f$ with a linear function of form<br>$$Y = \alpha + X\beta + \epsilon,$$<br>where $\alpha\in R$ is the intercept term and $\beta\in R^{p}$ is called the coefficients. What we have here is the linear regression model. We can choose different $\alpha$ ‘s and $\beta$ ‘s to form different linear regression models, and then generate a prediction if given a new data point $x = [x_1, \dots, x_p] \in R^p$ by $$\hat{y} = \alpha + x\beta.$$ Obviously, some choices of $\alpha$ and $\beta$ works better than others. Linear regression chooses the “best” set of coefficients such that a loss function is minimized.</p>
+<h2 id="The-Loss-Function"><a href="#The-Loss-Function" class="headerlink" title="The Loss Function"></a>The Loss Function</h2><p>The loss function or the objective function is a quantitative measure of the model’s performance. Linear regression uses ordinary least squares (OLS) (or Residual Sum of Squares (RSS)) which is written as<br>$$\sum\limits_{i=1}^n(Y_i-\hat{Y}_i)^2.$$<br>The RSS is a measure of deviance of predictions to the true target values. Linear regression selects the $\alpha$ and $\beta$ that minimizes the RSS. </p>
+<h2 id="Determining-Coefficients"><a href="#Determining-Coefficients" class="headerlink" title="Determining Coefficients"></a>Determining Coefficients</h2><p>First let’s consider a simpler case with just one feature. The loss function then can be written as<br>$$\sum\limits_{i=1}^n(Y_i-\alpha-\beta X)^2,$$<br>which, if we take derivate with respect $\alpha$ and $\beta$, and solve for when the expressions evaluate to 0, we will get<br>$$\hat\beta = \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})}$$<br>$$\hat\alpha = \bar{y} - \hat\beta\bar{x}.$$<br>What’s interesting about this case is that $\hat\beta$ can be written as<br>$$\hat\beta = \frac{\mathrm{Cov}(X,Y)}{\mathrm{Var}(X)},$$<br>which reminds us that the coefficents of X regress on Y vs Y regress on X are not the same (unless variance of $X$ and $Y$ are equal), which is a common misconception.</p>
+<p>Now, for the general case with multiple features, things are cleaner in matrix notations, and that’s what we will use.<br>The loss function is<br>$$(Y-X\beta)^T(Y-X\beta),$$<br>here we concatenated $\alpha$ onto $\beta$ (so $\beta = [\alpha \quad\beta_{old}^T]^T$) and added a vector of ones to the left column of $X$ (so $X = [1 \quad X_{old}]$).<br>Then take the derivative of loss function with respect to $\beta$, we get first derivative as<br>$$\frac{\partial RSS}{\partial \beta} = -2X^T(Y - X\beta),$$<br>and second derivative as<br>$$\frac{\partial^2 RSS}{\partial\beta\partial\beta^T} = 2X^TX.$$<br>The second derivative, being a non-negative expression, shows that the loss function is convex with respect to $\beta$. So if we solve for $\beta$ by setting first derivative to zero, that is the optimal solution which minimizes the loss function, which is<br>$$X^T(y - X\beta) = 0,$$<br>and $$\hat\beta = (X^TX)^{-1}X^TY.$$<br>Note that here we assume X has full column rank (columns of X are independent), otherwise $(X^TX)$ may not be invertible. We will revisit this point later on. So to get the coefficients we need to compute a matrix inverse, but we could also leverage graident descent (steepest descent that uses the negative of graident as search direction) to bypass that calculation. Both approach has its own pros and cons so we won’t get into it here.</p>
+<h2 id="Another-interpretation"><a href="#Another-interpretation" class="headerlink" title="Another interpretation"></a>Another interpretation</h2><p>The above derivation is the usual explanation on how the coefficients are calculated. It starts with defining the loss function, then solves the equation where the first derivative is zero. </p>
+<p>There is another perspective on how the coefficients are determined, which has a lot to do with linear algebra. To introduce this viewpoint, let us assume a simple case where we predict something we can predict perfectly. Suppose we want to predict the net profit of a company for each quarter, using the features of revenue and cost. Assuming net profit = revenue - cost, and we have two quarters worth of historical data </p>
+<p align="center">
+  <img src="https://i.imgur.com/P3GaThF.png">
+</p>
+where the first column is the revenue, second column is cost, and the target $Y$ is net profit. If we build a linear regression model around this data, we need to determine the $\beta$ in 
+$$Y = X\beta.$$
+In this case, since X is invertible, we can directly get $$\beta = X^{-1}Y.$$ But why can't we do this in the general case? Because in the general case, $X$ mostly will not be invertible, or even symmetric, and we won't be able to find $\beta$ so that the product will sum up to be exactly $Y$
+<p align="center">
+  <img src="https://i.imgur.com/d6ZJpPP.png">
+</p>
+ However, you can still demand a $\beta$ that gets you a $\hat{Y}$ which is as close to $Y$ as possible. In linear algebra, when a linear system of equation has no solution, you can still take the "pseudo inverse", which is denoted $$ A^+ = (A^TA)^{-1}A^T.$$ If the matrix has full column rank, then the pseudo inverse solution is the solution to the system of $\hat{Y} = X\beta$ where $\hat{Y}$ is the closest to $Y$ in the least square loss function sense. 
+So back to the linear regression case, we want to find $\beta$ where $$Y = X\beta,$$ and in general $X$ is singular, so we use the pseudo inverse instead, and we get
+$$\hat\beta = (X^TX)^{-1}X^TY,$$
+which is the same solution as the previous approach.
+
+<p>What I like about this interpretation is that it helps me memorize the expression for $\beta$. Just take pseudo inverse on both side and I don’t need to memorize the form or take derivatives in my head.</p>
+<h2 id="Yet-Another-Interpretation"><a href="#Yet-Another-Interpretation" class="headerlink" title="Yet Another Interpretation"></a>Yet Another Interpretation</h2><p>We have one more interpretation from a statistical stand point. What linear regression is really predicting can be seen as a conditional expectation of $Y$ given data $X$. In other words, it is $$\mathrm{E}[Y|X] = \alpha + \sum\limits_{i=1}^pX_i\beta_i,$$<br>where $X_i$ is the $i$ th feature. And the coefficient can be interpreted as, keeping all other features fixed, if the corresponding feature increases by 1 unit, how much does $Y$ move. The key word to focus on is “keeping other features fixed”. This interpretation will be extremely helpful later on in understanding issues around multicolinearity and so on.</p>
+<h1 id="Assumptions-of-Linear-Regression"><a href="#Assumptions-of-Linear-Regression" class="headerlink" title="Assumptions of Linear Regression"></a>Assumptions of Linear Regression</h1><p>Now that we are familiared with different perspectives of the linear regression model, let’s delve into the assumptions of linear regression. If you search about these assumptions online, you will likely see different versions that are similar to each other. Some versions say there are 4 assumptions, other says 5 or even up to 10. I dug around and realized that the main source of confusion comes from the Gauss-Markov theorem, which states that if certain assumptions are met, OLS can be shown to have the lowest sampling variance within the class of linear unbiased estimators, or best linear unbiased estimator (BLUE). However, these assumptions are not all required for one to use linear regression and achieve reasonable results. As a matter of fact, the assumptions required largely depends on what you want to use your linear regression for. I will touch on couple of these assumptions below, and go over why they are important, and what happens if they are violated.</p>
+<ol>
+<li><p>The residuals have mean zero: The residuals usually captures the noise or measurement error in $Y$. It is easy to see that, if the residual has a positive/negative mean, it implies that there might be a measurement error that constantly over-estimates/under-estimates $Y$, so that will eventually lead to a positively-biased/negatively-biased estimate of the intercept term ($\alpha$). For linear regression to be an unbiased estimator, this assumption is required.</p>
+</li>
+<li><p>Homoscedasticity: The residuals need to have the same constant variance. The intuition here is that, linear regression treats each data point with equal weight. So if some data has a larger variance than others, then assigning them with equal importance may not be ideal. A good example is predicting family income. Lower income family tends to have smaller variance compared to families that are better off. If we fit a regression line using only the well off families, the line we get will have wider confidence interval compared to if we fit it over the lower income families. Violating this assumption may cause the standard errors of coefficient estimates to be biased, thus leading to issue with hypothesis testing and potentially result in failure to reject null hypothesis. However, not meeting this assumption does not cause the OLS estimates of coefficients to be biased. </p>
+</li>
+<li><p>No autocorrelation: This means the residuals should be uncorrelated. Similar argument from Homoscedasticity section can be used - OLS assigns equal weight to each data, and if residuals are correlated, then data that are correlated does not provide much new information and should carry lesser weight. This usually happens in time series data, where two data in consecutive time units usually are correlated, and knowing one data after knowing its previous data does not provide much added value. If autocorrelation exists, then it will lead to underestimates of standard error of coefficent estimates, as well as lower p values. </p>
+</li>
+</ol>
+<ol start="4">
+<li>No multicolinearity: Multicolinearity means some features are highly correlated with each other. This can be a pair of features, or multiple features. Why is this a problem? From the linear algebra perspective, this means $X$ does not have full column rank, so the pseudo inverse will not yield a unique solution to the linear system. From the statistical perspective, it is impossible to achieve “holding all other features fixed”, as if the features are correlated, moving one feature means the other feature will also move. Thus the model can not attribute the contribution of each feature correctly. To detect this problem, a common indicator to use is the Variance Inflation Factor (VIF). Once multicolinearity is detected, removing the correlated features and the problem will go away.</li>
+</ol>
+<p>So far I covered some of the major assumptions with intuitions of why they are needed and what happens if they are not satisfied. For a more indepth view of how these assumptions are used to prove OLS is BLUE, I strongly recommend <a href="https://towardsdatascience.com/ols-linear-regression-gauss-markov-blue-and-understanding-the-math-453d7cc630a5" target="_blank" rel="noopener">this great article</a> which goes into much of the details. Also, <a href="https://youtu.be/WK03XgoVsPM" target="_blank" rel="noopener">the econometrics course by Professor Mark</a> is a great one to watch.</p>
+<p>Hopefully this article gives you a better understanding of linear regression and its assumptions. For further reading materials, I recommend the following</p>
+<ul>
+<li><a href="https://www.statlearning.com/" target="_blank" rel="noopener">Introduction to Statistical Learning</a></li>
+<li><a href="https://hastie.su.domains/ElemStatLearn/" target="_blank" rel="noopener">The Elements of Statistical Learning</a></li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -244,7 +296,7 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -257,377 +309,126 @@ ga('send', 'pageview');
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://xiawei918.github.io/2021/11/30/intro-to-linear-regression/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
+  
+    <a href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dynamic program vs integer program: which one is better for knapsack problem?</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/" class="archive-article-date">
-        <time datetime="2020-01-20T05:09:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/" target="_blank">Dynamic program vs integer program: which one is better for knapsack problem?</a>
-  
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">optimization</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">dynamic programming</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">integer programming</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/12/23/Another-way-to-better-organize-Pandas-code/" class="archive-article-date">
-        <time datetime="2019-12-23T20:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/12/23/Another-way-to-better-organize-Pandas-code/" target="_blank">Another way to better organize Pandas code</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">pandas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">data</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 
+    'wei-xia-com'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by
+      Disqus.</a></noscript>
+</section>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/12/07/How-to-efficiently-loop-through-Pandas-DataFrame/" class="archive-article-date">
-        <time datetime="2019-12-07T19:59:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-07</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/12/07/How-to-efficiently-loop-through-Pandas-DataFrame/" target="_blank">How to efficiently loop through Pandas DataFrame</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">pandas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">data</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/12/02/Basic-Linux-commands-that-will-make-your-life-more-efficient/" class="archive-article-date">
-        <time datetime="2019-12-02T20:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/12/02/Basic-Linux-commands-that-will-make-your-life-more-efficient/" target="_blank">Basic Linux commands that will make your life more efficient</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/12/02/Build-your-own-blog-with-Hexo/" class="archive-article-date">
-        <time datetime="2019-12-02T20:00:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/12/02/Build-your-own-blog-with-Hexo/" target="_blank">Build your own blog with Hexo</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/11/23/hello-world/" class="archive-article-date">
-        <time datetime="2019-11-23T22:23:54.203Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/11/23/hello-world/" target="_blank">Welcome</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/tech//" class="article-tag-list-link color5">tech</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -656,10 +457,10 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",

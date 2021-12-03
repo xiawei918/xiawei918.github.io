@@ -227,54 +227,28 @@ ga('send', 'pageview');
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>At this day and age, building a web blog yourself almost seems like an outdated thing to do. Most people can get by with using Wordpress or Wix, which does most of the blog-building work for you and let you focus on actual writing. However, some people (me, for example) still prefer to have things done a certain way, and instead of navigating through thousands of templates and plugins we would rather build a simple static website to house our posts and thoughts. If you are one of us, you will find <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> just the right tool for “Hexo your own blog”, which is what they like to say.</p>
+    <p>At this day and age, building a web blog yourself almost seems like an outdated thing to do. Most people can get by with using Wordpress or Wix, which does most of the blog-building work for you and let you focus on actual writing. However, some people (me, for example) still prefer to have things done a certain way, and instead of navigating through thousands of templates and plugins we would rather build a simple static website to house our posts and thoughts. If you are one of us, you will find <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> just the right tool for "Hexo your own blog", which is what they like to say.</p>
 <a id="more"></a>
-
-<h2 id="What’s-Hexo"><a href="#What’s-Hexo" class="headerlink" title="What’s Hexo?"></a>What’s Hexo?</h2><p>Hexo is a simple yet powerful framework for generating static websites. Static website refers to the website that has fixed content and only displays information without and server side scripting or database design. In other words, you will not be able to have readers push data (for example comments) to you unless you use some extra plugins. </p>
-<p>To me this is perfect, since I am not expecting a lot of comments, and all I need is to have a webstie that stores my notes, which if I don’t write down somewhere I will probably forget. When I first started, I looked into <a href="https://flask.palletsprojects.com/en/1.1.x/" target="_blank" rel="noopener">Flask</a> and <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a>, but quickly realized that I am spending way too much time on figuring out how to organize authentication and databases, while having very little time to actually write. Plus, Hexo has a variety of plug-ins that cater to your specific needs. For one, many Hexo themes allows using <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> for commenting, which is one functionality that’s always nice to have.</p>
-<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>Enough said, let’s start building a website with Hexo! </p>
-<p>Using hexo is extremely easy, but first you will need the following:</p>
-<ul>
-<li>Install <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a></li>
-<li>Install <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git</a> and create a <a href="https://github.com/" target="_blank" rel="noopener">Github</a> account</li>
-<li>An easy-to-use text editor (Sublime, VScode, Atom, etc)</li>
-</ul>
-<p>Once the above are installed, we can install Hexo by running</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<p>Now you are ready to hexo your own blog!<br>First, start with</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init [your website folder name]</span><br></pre></td></tr></table></figure>
-<p>this will initialize a repository under <code>[your website folder name]</code>.<br>To spin up a default Hexo website, do</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> [your website folder name]</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>This will generate the static files (html, css, etc) for your website with hexo default options. You can now view your website on local hosting by running</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>you will see output similar to the following </p>
-<blockquote>
-<p>INFO  Start processing<br>INFO  Hexo is running at <a href="http://localhost:xxxx" target="_blank" rel="noopener">http://localhost:xxxx</a> . Press Ctrl+C to stop.</p>
-</blockquote>
-<p>Copy the url to your broswer, and viola! Welcome to your website!<br>This website is created using Hexo’s default theme “landscape”, which looks like this:<br><img src="https://i.imgur.com/xrH8JRe.png" alt="landscape theme" title="default landscape theme"></p>
-<h2 id="Choosing-a-Theme"><a href="#Choosing-a-Theme" class="headerlink" title="Choosing a Theme"></a>Choosing a Theme</h2><p>Hexo offers a wide selection of themes, you can pick and choose the ones you like from <a href="https://hexo.io/themes/" target="_blank" rel="noopener">here</a>. This site uses the “Yilia-plus” theme. To install a theme, follow the instructions on the theme’s Github read me. Once installed, modify the <code>theme</code> setting in <code>_config.yml</code> to your theme’s name.</p>
-<p>Take the theme <code>Yilias-plus</code> for example, first go to the theme’s <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank" rel="noopener">github repository</a> and clone the theme to <code>/themes</code> folder that’s under your website directory.</p>
-<p>If you are in the root folder of your website directory, copy and execute the following in the terminal</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./themes/</span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/JoeyBling/hexo-theme-yilia-plus.git ./yilia-plus</span><br></pre></td></tr></table></figure>
-
-<p>Then update <code>_config.yml</code> in root directory to use the new theme by changing the value of <code>theme</code> from <code>landscape</code> to <code>yilia-plus</code> shown as follows</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">yilia-plus</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">''</span></span><br></pre></td></tr></table></figure>
-<p>Now your blog will look something like this<br><img src="https://i.imgur.com/9NQrMXc.png" alt="yilia-plus theme" title="yilia-plus theme"></p>
-<h2 id="Useful-commands"><a href="#Useful-commands" class="headerlink" title="Useful commands"></a>Useful commands</h2><p>Now that your blog is up and running, you can use the following commands to create new posts and pages</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] <span class="string">"postName"</span></span><br></pre></td></tr></table></figure>
-<p>This will generate a new post (markdown file) to <code>source\_posts\post\postName.md</code>. You can write your blog post by modifying this file. The file uses Markdown syntax, a short Markdown cheatsheet can be found <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener">here</a>.</p>
-<p>Once you are done with the blog post, save it and preview your post using</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>To get ready for deployment, do</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-<p>which cleans the old static files. Then do</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>to generate the updated static files. </p>
-<p>If you already have your site hosted somewhere (like <a href="https://pages.github.com/" target="_blank" rel="noopener">github pages</a>), simply do</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>and then your new blog post should be online and ready to be viewed by your readers!</p>
-<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next"></a>What’s next</h2><p>The majority of this posts follows from my friend Xi’s <a href="http://xihey.com/2015/08/15/build_website/" target="_blank" rel="noopener">post</a> which follows from this Chinese <a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="noopener">post</a>. The original post contains more details, but it does require you to be able to understand Chinese. There are other excellent resources online on how to use Hexo and what features it provides, so feel free to <a href="https://www.google.com/" target="_blank" rel="noopener">Google</a> around. I will also post stuff about using Hexo whenever I have time or find some interesting features. Have fun blogging!</p>
+<h2 id="whats-hexo">What's Hexo?</h2>
+<p>Hexo is a simple yet powerful framework for generating static websites. Static website refers to the website that has fixed content and only displays information without and server side scripting or database design. In other words, you will not be able to have readers push data (for example comments) to you unless you use some extra plugins.</p>
+<p>To me this is perfect, since I am not expecting a lot of comments, and all I need is to have a webstie that stores my notes, which if I don't write down somewhere I will probably forget. When I first started, I looked into <a href="https://flask.palletsprojects.com/en/1.1.x/" target="_blank" rel="noopener">Flask</a> and <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a>, but quickly realized that I am spending way too much time on figuring out how to organize authentication and databases, while having very little time to actually write. Plus, Hexo has a variety of plug-ins that cater to your specific needs. For one, many Hexo themes allows using <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> for commenting, which is one functionality that's always nice to have.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>Enough said, let's start building a website with Hexo!</p>
+<p>Using hexo is extremely easy, but first you will need the following: * Install <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> * Install <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git</a> and create a <a href="https://github.com/" target="_blank" rel="noopener">Github</a> account * An easy-to-use text editor (Sublime, VScode, Atom, etc)</p>
+<p>Once the above are installed, we can install Hexo by running <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure></p>
+<p>Now you are ready to hexo your own blog! First, start with <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init [your website folder name]</span><br></pre></td></tr></table></figure> this will initialize a repository under <code>[your website folder name]</code>. To spin up a default Hexo website, do <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> [your website folder name]</span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure> This will generate the static files (html, css, etc) for your website with hexo default options. You can now view your website on local hosting by running <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure> you will see output similar to the following &gt;INFO Start processing &gt;INFO Hexo is running at http://localhost:xxxx . Press Ctrl+C to stop.</p>
+<p>Copy the url to your broswer, and viola! Welcome to your website! This website is created using Hexo's default theme "landscape", which looks like this: <img src="https://i.imgur.com/xrH8JRe.png" title="default landscape theme" alt="landscape theme" /></p>
+<h2 id="choosing-a-theme">Choosing a Theme</h2>
+<p>Hexo offers a wide selection of themes, you can pick and choose the ones you like from <a href="https://hexo.io/themes/" target="_blank" rel="noopener">here</a>. This site uses the "Yilia-plus" theme. To install a theme, follow the instructions on the theme's Github read me. Once installed, modify the <code>theme</code> setting in <code>_config.yml</code> to your theme's name.</p>
+<p>Take the theme <code>Yilias-plus</code> for example, first go to the theme's <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank" rel="noopener">github repository</a> and clone the theme to <code>/themes</code> folder that's under your website directory.</p>
+<p>If you are in the root folder of your website directory, copy and execute the following in the terminal <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./themes/</span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/JoeyBling/hexo-theme-yilia-plus.git ./yilia-plus</span><br></pre></td></tr></table></figure></p>
+<p>Then update <code>_config.yml</code> in root directory to use the new theme by changing the value of <code>theme</code> from <code>landscape</code> to <code>yilia-plus</code> shown as follows <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">yilia-plus</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">''</span></span><br></pre></td></tr></table></figure> Now your blog will look something like this <img src="https://i.imgur.com/9NQrMXc.png" title="yilia-plus theme" alt="yilia-plus theme" /></p>
+<h2 id="useful-commands">Useful commands</h2>
+<p>Now that your blog is up and running, you can use the following commands to create new posts and pages <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] <span class="string">"postName"</span></span><br></pre></td></tr></table></figure> This will generate a new post (markdown file) to <code>source\_posts\post\postName.md</code>. You can write your blog post by modifying this file. The file uses Markdown syntax, a short Markdown cheatsheet can be found <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener">here</a>.</p>
+<p>Once you are done with the blog post, save it and preview your post using <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure> To get ready for deployment, do <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure> which cleans the old static files. Then do <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure> to generate the updated static files.</p>
+<p>If you already have your site hosted somewhere (like <a href="https://pages.github.com/" target="_blank" rel="noopener">github pages</a>), simply do <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure> and then your new blog post should be online and ready to be viewed by your readers!</p>
+<h2 id="whats-next">What's next</h2>
+<p>The majority of this posts follows from my friend Xi's <a href="http://xihey.com/2015/08/15/build_website/" target="_blank" rel="noopener">post</a> which follows from this Chinese <a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="noopener">post</a>. The original post contains more details, but it does require you to be able to understand Chinese. There are other excellent resources online on how to use Hexo and what features it provides, so feel free to <a href="https://www.google.com/" target="_blank" rel="noopener">Google</a> around. I will also post stuff about using Hexo whenever I have time or find some interesting features. Have fun blogging!</p>
 
     
 
@@ -448,7 +422,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019-2020 Wei Xia
+    		&copy; 2019-2021 Wei Xia
     	</div>
       	<div class="footer-right">
 			
@@ -551,19 +525,19 @@ ga('send', 'pageview');
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">pandas</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">data</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">pandas</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">data</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,6 +550,14 @@ ga('send', 'pageview');
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">integer programming</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Machine Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">Linear Regression</a>
               </li>
             
             <div class="clearfix"></div>
