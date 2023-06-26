@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Dynamic program vs integer program: which one is better for knapsack problem? | Wei's Sandbox</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><div class="darkmode-toggle">🌓</div><script>var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+var toggle = document.querySelector('.darkmode-toggle');
+var html = document.querySelector('html');
+
+html.dataset.dark = localStorage.dark || prefersDarkMode.matches;
+
+toggle.addEventListener('click', () => {
+localStorage.dark = !(html.dataset.dark == 'true');
+html.dataset.dark = localStorage.dark;
+});</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Dynamic program vs integer program: which one is better for knapsack problem?</h1><a id="logo" href="/.">Wei's Sandbox</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about-me/"><i class="fa fa-user"> About</i></a><a href="/friends/"><i class="fa fa-link"> Links</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Dynamic program vs integer program: which one is better for knapsack problem?</h1><div class="post-meta">2020-01-19<span> | </span><span class="category"><a href="/categories/tech/">tech</a></span></div><a class="disqus-comment-count" data-disqus-identifier="2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/" href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/#disqus_thread"></a><div class="post-content"><p>The field of optimization encompasses many different fields of models and algorithms. You can classify the field base on many different critierias: Linear vs nonlinear, convex vs non-convex, continuous vs discrete, etc. Often times, one problem could be solved with multiple different approaches, and this is where different underlying solution philosohpies meet each other, which I find very interesting. In this article, we are going to dive deeper into the difference between dynamic programming and integer programming with the interesting and well-studied problem of knapsack problem.</p>
+<p><img src="https://i.imgur.com/4E0RhxD.jpg" alt="Backpack"></p>
+<span id="more"></span>
+
+<h1 id="What-is-Knapsack-Problem"><a href="#What-is-Knapsack-Problem" class="headerlink" title="What is Knapsack Problem"></a>What is Knapsack Problem</h1><p>Knapsack problem is perhaps widly-known as one of the medium level Leetcode problem. But even before Leetcode, knapsack was covered in the introduction of integer programming classes and perhaps higher level computer science classes, due to its recursive nature and easy problem setup. As an optimization person, knapsack problem is one of the first problems you learn in integer programming class. What’s more, knapsack problem is in fact a NP-hard problem! However, it is one of the NP hard problem we can solve pretty efficiently. The more reason we want to start with it!</p>
+<p>Let’s recap what the knapsack problem is. Suppose you are going on a trip, and you have a list of $n$ items you would like to carry with you in your backpack (or knapsack, if you will). Each item has a weight and an utility score. You would like to find the subset of items, the total weight of which is below a threshold $W$ and the total utility score of which is maximized. </p>
+<p>From the description, the problem sounds simple enough. One caveat is that each item can be either selected or not selected, but it can not be half selected or fractionally selected. This is a good distinction between the 0-1 knapsack problem where each item is a whole, and the fractional knapsack problem where a fractional part of an item can be selected. In real life, the 0-1 knapsack problem can be seen as deciding if a flashlight should be selected, whereas the fractional problem might be considering how much of the 1 gallon of water should be selected.</p>
+<h1 id="Simple-Heuristic"><a href="#Simple-Heuristic" class="headerlink" title="Simple Heuristic"></a>Simple Heuristic</h1><p>The main tradeoff of the knapsack problem is between getting as much utility score as possible while satisfying the constrained weight limit. A natural idea is to calculate a utility/weight ratio for each item, then try to fit the items that has higher utility score per unit weight until hitting the weight threshold. This algorithm is a greedy algorithm, and is actually the solution to the fractional knapsack problem. However, this does not guarantee an optimal solution to the 0-1 knapsack problem, as demonstrated by the following counter example.</p>
+<p>Suppoese the specs of the items are given in the following table:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Items</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Utility</td>
+<td align="center">60</td>
+<td align="center">100</td>
+<td align="center">120</td>
+</tr>
+<tr>
+<td align="center">Weight</td>
+<td align="center">10</td>
+<td align="center">20</td>
+<td align="center">30</td>
+</tr>
+<tr>
+<td align="center">Ratio</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+</tbody></table>
+<p>The weight threshold is 50. Using the greedy heuristic, we will select item 1 and 2, with a total utility of 160 and total weight of 30. Clearly, this is not the optimal solution, which is choosing item 2 and 3, where the total utility is 220, and total weight is exactly 50. The insight is that, ranking with a relative ratio is good, but it does not take into consideration of the absolute weight value and items can not be selected in a fractional manner.</p>
+<p>As a matter of fact, one can exploit this weakness and create instances of the knapsack problem which makes the solution of the greedy heuristic arbitrarily bad.</p>
+<p>Consider the following knapsack problem with weight threshold $X$</p>
+<table>
+<thead>
+<tr>
+<th align="center">Items</th>
+<th align="center">1</th>
+<th align="center">2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Utility</td>
+<td align="center">1</td>
+<td align="center">X-1</td>
+</tr>
+<tr>
+<td align="center">Weight</td>
+<td align="center">1</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="center">Ratio</td>
+<td align="center">1</td>
+<td align="center">1-1/X</td>
+</tr>
+</tbody></table>
+<p>The greedy algorithm solution will only select item 1, with total utility 1, rather than the optimal solution of selecting item 2 with utility score $X-1$. As we make $X$ arbitrarily large, the greedy algorithm will perform arbitrarily bad compared to the optimal solution.</p>
+<h1 id="Dynamic-programming-approach"><a href="#Dynamic-programming-approach" class="headerlink" title="Dynamic programming approach"></a>Dynamic programming approach</h1><p>Dynamic programming is based on the idea that, in the optimal solution, a given item $i$ is either in the selected subset or not. This property defines the recursive nature of the algorithm. Let $I$ be the set of items, $u_i$, $w_i$ be the utility and weight of item $i$ respectively, $W$ be the weight threshold, and $knapsack(I,W)$ be the optimal solution of knapsack problem with item set $I$ and weight threshold $W$. In mathematical term, the recursion can be defined as<br>$$<br>knapsack(I, W) = \max(knapsack(I\backslash \{i\}, W), u_i + knapsack(I\backslash \{i\}, W-w_i)),<br>$$<br>where $I\backslash\{i\}$ represents the set of items $I$ without item $i$. </p>
+<ul>
+<li>The first term in the $\max$ statement is the case where item $i$ <strong><em>is not</em></strong> in the optimal solution, so the optimal solution is the same as the optimal solution to the knapsack problem with same weight threshold and same items except item $i$. </li>
+<li>The second term is the case where item $i$ <strong><em>is</em></strong> in the optimal solution, and to choose the rest of the items in the optimal solution, it requires solving a new knapsack problem, where the set of items is $I\backslash\{i\}$, and the weight threshold is $W-w_i$.</li>
+</ul>
+<p>With this recursive definition, we can build a table to keep track of the optimal solution of each knapsack problem, starting from 0 items and weight threshold 0 to all items in set $I$ and weight threshold $W$. Then whenever we are computing the solution of $knapsack(I\backslash\{i\}, W-w_i)$, we can just look up the solution in the table.</p>
+<p>Here is a python implementation of the dynamic programming algorithm:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">knapSack</span>(<span class="params">weight_threshold, weight_list, util_list</span>): </span><br><span class="line">    <span class="string">&quot;&quot;&quot; </span></span><br><span class="line"><span class="string">    A Dynamic Programming algorithm that solves the 0-1 Knapsack problem.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        weight_threshold: Weight threshold</span></span><br><span class="line"><span class="string">        weight_list: List of weights for each item in item set I</span></span><br><span class="line"><span class="string">        util_list: utility score of each item i</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        The maximum value that can be put in a knapsack of capacity W </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    n = <span class="built_in">len</span>(util_list)</span><br><span class="line">    lookup_table = [[<span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(weight_threshold+<span class="number">1</span>)] <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)] </span><br><span class="line">  </span><br><span class="line">    <span class="comment"># Build table K[][] in bottom up manner </span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>): </span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> <span class="built_in">range</span>(weight_threshold+<span class="number">1</span>): </span><br><span class="line">            <span class="keyword">if</span> i==<span class="number">0</span> <span class="keyword">or</span> w==<span class="number">0</span>: </span><br><span class="line">                lookup_table[i][w] = <span class="number">0</span></span><br><span class="line">            <span class="keyword">elif</span> weight_list[i-<span class="number">1</span>] &lt;= w:</span><br><span class="line">                lookup_table[i][w] = <span class="built_in">max</span>(</span><br><span class="line">                    util_list[i-<span class="number">1</span>] + lookup_table[i-<span class="number">1</span>][w-weight_list[i-<span class="number">1</span>]], </span><br><span class="line">                    lookup_table[i-<span class="number">1</span>][w])</span><br><span class="line">            <span class="keyword">else</span>: </span><br><span class="line">                lookup_table[i][w] = lookup_table[i-<span class="number">1</span>][weight_threshold] </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> lookup_table[n][weight_threshold]</span><br></pre></td></tr></table></figure>
+<p>Note that here $i$ stands for the number of items available to consider from set $I$. For example, $i = 2$ means we can only select from the set of item 1 and 2. As $w$ iterates through all possible weight, and $K[i][w]$ represent the optimal uitlity score of the knapsack problem with weight threshold $j$ and has items $1, 2, \ldots, i$. </p>
+<p>Let’s see the DP algorithm in action with the following problem with weight threshold 5:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Items</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Utility</td>
+<td align="center">6</td>
+<td align="center">10</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">Weight</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">Ratio</td>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">3.3</td>
+</tr>
+</tbody></table>
+<p>The table $K$ would look like the table below when the algorithm terminates with the optimal solution:</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">w=0</th>
+<th align="center">w=1</th>
+<th align="center">w=2</th>
+<th align="center">w=3</th>
+<th align="center">w=4</th>
+<th align="center">w=5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i=0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">i=1</td>
+<td align="center">0</td>
+<td align="center">6</td>
+<td align="center">6</td>
+<td align="center">6</td>
+<td align="center">6</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">i=2</td>
+<td align="center">0</td>
+<td align="center">6</td>
+<td align="center">10</td>
+<td align="center">16</td>
+<td align="center">16</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">i=3</td>
+<td align="center">0</td>
+<td align="center">6</td>
+<td align="center">10</td>
+<td align="center">16</td>
+<td align="center">16</td>
+<td align="center">20</td>
+</tr>
+</tbody></table>
+<p>where the optimal solution can be found at $K[3][5] = 20$ and item 2 and 3 are selected.</p>
+<h1 id="Integer-Programming"><a href="#Integer-Programming" class="headerlink" title="Integer Programming"></a>Integer Programming</h1><p>Another approach is the integer programming approach. Integer programming  is a mathematical optimization program in which some or all of the variables are restricted to be integers. Integer programming is NP-complete, so it is not surprising that the knapsack problem, which can be posed as an integer programming problem, is NP-hard as well. When using the Integer programming approach, one usually models the decisions as discete decision variables, and feasible decisions are described by a set of constraints. The resulting model can be solved by special integer programming algorithm to obtain an optimal solution. In this case, the discrete decision is whether an item should be selected or not. We introduce $x_i$ where $i\in I$ to represent the decision of item $i$ being selected or not. If $x_i = 1$, then item $i$ is selected, otherwise $x_i = 0$ and item $i$ is not selected. </p>
+<p>The integer programming model can be formulated as the following:<br>\begin{equation}<br>\begin{split}<br>\max \sum\limits_{i\in I} u_ix_i,  \<br>\text{ such that } \sum_{i\in I} w_ix_i \leq W \<br>\end{split}<br>\end{equation}</p>
+<p>The term $$\max \sum\limits_{i\in I} u_ix_i$$ is the objective function we want to maximize. In this case, the objective is to maximize the total utility score of the selected subset of items. </p>
+<p>The inequality $$\sum_{i\in I} w_ix_i \leq W$$ is the knapsack constraint, which enforces the selected items’ total weight does not exceed $W$.</p>
+<p>The model is the classic knapsack problem modeled as integer program. To solve the above model, one can utilize any integer programming solvers. A good option is <a target="_blank" rel="noopener" href="https://developers.google.com/optimization">Google ORtools</a> which is an open source tools for writing and solving optimization models. </p>
+<p>Below is the python code that uses ORtools and CBC integer programming solver to model and solve the knapsack problem:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mip</span>(<span class="params">weight_threshold, weight_list, util_list</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; </span></span><br><span class="line"><span class="string">    A Integer Programming model that solves the 0-1 Knapsack problem.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        weight_threshold: Weight threshold</span></span><br><span class="line"><span class="string">        weight_list: List of weights for each item in item set I</span></span><br><span class="line"><span class="string">        util_list: utility score of each item i</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        The maximum value that can be put in a knapsack of capacity W </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    n = <span class="built_in">len</span>(weight_list)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># initialize the integer programming model with the open source CBC solver</span></span><br><span class="line">    solver = pywraplp.Solver(<span class="string">&#x27;simple_mip_program&#x27;</span>,</span><br><span class="line">                                 pywraplp.Solver.CBC_MIXED_INTEGER_PROGRAMMING)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Declare binary variable x for each item from 1 to n</span></span><br><span class="line">    x_dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        x_dict[i] = solver.IntVar(<span class="number">0</span>, <span class="number">1</span>, <span class="string">f&#x27;x_<span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add constraint on total weight of items selected cannot exceed weight threshold</span></span><br><span class="line">    solver.Add(solver.Sum([weight_list[i]*x_dict[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]) &lt;= weight_threshold)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Maximize total utility score</span></span><br><span class="line">    solver.Maximize(solver.Sum([util_list[i]*x_dict[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Solve!</span></span><br><span class="line">    status = solver.Solve()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Uncomment the section below to print solution details</span></span><br><span class="line">    <span class="comment"># if status == pywraplp.Solver.OPTIMAL:</span></span><br><span class="line">    <span class="comment">#     print(&#x27;Solution:&#x27;)</span></span><br><span class="line">    <span class="comment">#     print(&#x27;Objective value =&#x27;, solver.Objective().Value())</span></span><br><span class="line">    <span class="comment">#     print(&#x27;Problem solved in %f milliseconds&#x27; % solver.wall_time())</span></span><br><span class="line">    <span class="comment">#     for i in x_dict:</span></span><br><span class="line">    <span class="comment">#         print(f&#x27;&#123;x_dict[i]&#125; = &#123;x_dict[i].solution_value()&#125;&#x27;)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> solver.Objective().Value()</span><br></pre></td></tr></table></figure>
+
+<p>The standard method to solve an integer programming is called <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Branch_and_bound">Branch-and-Bound</a>. This is a divide-and-conquer approach which partitions the solution space repetitively until a solution is found and proven to be optimal.</p>
+<p>As the name suggests, branch-and-bound consists of two main action:</p>
+<ul>
+<li>Bound: Given a solution set, get an upper/lower bound estimate of the best solution that can be found in the solution set. For example, one can find an upper bound for a 0-1 knapsack problem by solving its corresponding fractional knapsack problem. Since fractional knapsack problem allows selecting a fraction of an item while 0-1 knapsack problem does not, fractional knapsack problem will always yield a equal or better objective value, which can be seen as an upper bound on the objective of the 0-1 knapsack problem.</li>
+<li>Branch: While computing bounds on the solution set, we encounter solutions which satisfies all constraints of the problem, but yet is not feasible because the solution values are not integer. In this case we can branch on one of the fractional value variables - splitting the current solution space into two: (in the binary variable case) one that enforces the fractional value variables to be 0, and the other enforces the fractional value variable to be 1. For example, solving the fractional knapsack problem may yield a solution that takes 50% of item 2. One can then branch on item 2’s variable by splitting the solution space to either include item 2 or not include item 2.</li>
+</ul>
+<p>Let’s walk through solving the example problem we used with dynamic programming, and hopefully that can clear things up.</p>
+<p>We start with the original problem of $knapsack(I, W)$, which in branch-and-bound is referred to as the “master problem”. We first solve a relaxation of the master problem. In integer programming, a relaxation usually refers to linear relaxation, where instead of requiring each binary variable $x_i$ to be binary, we relax this constraint, and enforce each $x_i$ to be between $[0, 1]$. This results in a linear program, hence the name “linear relaxation”. Interestingly, in the knapsack problem case, the linear relaxation is just the fractional knapsack problem. So we can solve it with the heuristic and obtain the optimal solution. For more general integer programs’ relaxations, solving a linear program is required.</p>
+<p>After solving the relaxation of $knapsack(I, W)$, we get $(x_1, x_2, x_3) = (1, 1, 0.67)$ and an objective of $22.67$. This solution gives us two pieces of information:</p>
+<ul>
+<li>A global upper bound of 22.67 on the objective, since the solution space of 0-1 knapsack problem is a subset of the fractional knapsack problem, the best objective of the 0-1 knapsack can not do better than 22.67. As a matter of fact, it cannot be better than 22, since all coefficients in the 0-1 knapsack problem are integers.</li>
+<li>The only fractional variable is $x_3$, which is perfect for branching on.</li>
+</ul>
+<p>Next, we branch on variable $x_3$ by adding a constraint, and we obtain two subproblems:<br>a) $knapsack(I, W)$ with constraint $x_3 = 0$<br>b) $knapsack(I, W)$ with constraint $x_3 = 1$<br>where each subproblem is a new knapsack problem, and we repeat the same steps and solve each subproblem’s relaxation.</p>
+<p>For subproblem a), solving its relaxation yields a solution of $(x_1, x_2, x_3) = (1, 1, 0)$ and objective of $16$. This is a feasible solution, which can be used as a lower bound. In other words, now we have found a candidate solution with objective $16$, we are only looking for solutions that has a better objective than 16. Any other solution with a worse objective can be discarded. </p>
+<p>For subproblem b), the solution to its relaxation gives the solution of $(x_1, x_2, x_3) = (1, 0.5, 1)$, and an objective of $21$. As the subproblem a) already attained a best objective of 16, the global upper bound can be updated from 22 to 21, since the only chance of finding a better solution is on subproblem b)’s solution space, and the best it can get is 21. But since $x_2$ is now fractional, we further branch on $x_2$, and form problems b1) and b2).</p>
+<p>b1)  $knapsack(I, W)$ with constraint $x2 = 0, x_3 = 1$<br>b2)  $knapsack(I, W)$ with constraint $x2 = 1, x_3 = 1$</p>
+<p>Solving subproblem b1), we obtain solution $(x_1, x_2, x_3) = (1, 0, 1)$ with objective 16. We can safely discard this branch, as the best objective it can attain is 16, which is already found on subproblem a). In this case, since the solution is also integral, we will stop anyway as there are no other solutions left to investigate on problem b1) that can potentially yield a better objective.</p>
+<p>Solving subproblem b2), we get $(x_1, x_2, x_3) = (0, 1, 1)$ with objective 20. Since the solution is integral and is larger than the previous lower bound of 16, this is the new lower bound. And as this is the last branch that we need to explore, we can claim this is the optimal solution to the original problem. Another certificate that shows the optimality of the solution is that the global upper bound is 21, and there is no combination of items that will yield a totoal utility score of 21, thus the solution of objective 20 is optimal. </p>
+<p>Below is a flowchart that summarizes the steps above:<br><img src="https://i.imgur.com/dOiwpGa.png" alt="Branch-and-Bound example"></p>
+<h1 id="Comparisons"><a href="#Comparisons" class="headerlink" title="Comparisons"></a>Comparisons</h1><p>Let’s come back and look at both approaches. Both approaches are using some kind of recursive scheme: dynamic programming exploit the problem structure and builds towards the optimal solution from smaller problems recursively, while integer programming recursively partitions the problem space to smaller trunks, and use estimated bounds to discard uninteresting solution partitions to accelerate the search. Dynamic programming is like a super smart enumeration, and it avoids unnecessary computations by always building upon simpler problem’s optimal solutions. Integer programming does not necessarily work exclusively within the solution set. Rather, it uses the information gained from solving the relaxations to refine the lower and upper bounds, and work towards closing the gap between the bounds. The bounds can help eliminate parts of the solution space that does not contain better solutions, which is why branch-and-bound can be very efficient.<br>Dynamic programming is great when the problem struture is nice, and the solution set is moderate. Integer programming can be very efficient if you have efficient ways to compute quality lower and upper bounds on the solutions.</p>
+<h2 id="Which-is-better-for-knapsack-problem"><a href="#Which-is-better-for-knapsack-problem" class="headerlink" title="Which is better for knapsack problem?"></a>Which is better for knapsack problem?</h2><p>In the end, which one should we use for knapsack problem? To answer this question, we run two sets of experiments:</p>
+<ol>
+<li>Run both algorithms on varying sizes of randomly generated knapsack problems to see the impact of size on performance</li>
+<li>Run both algorithms on randomly generated knapsack problems with varying tightness of the knapsack constraints to see the effect of constraint tightness on performance.</li>
+</ol>
+<h3 id="The-impact-of-problem-size-on-performance"><a href="#The-impact-of-problem-size-on-performance" class="headerlink" title="The impact of problem size on performance"></a>The impact of problem size on performance</h3><p>The problem size is an usual factor to consider as larger problems usually take longer time to solve. We generate instances of knapsack problem with number of items ranging from 100 to 1000. The weight and utility scores are randomly generated integers between 0 and 100. The weight threshold is a fixed number of 100. We run both algorithms on each instances 7 times, and record the average solution time in terms of seconds. The results can be summarized in the following plot:<br><img src="https://i.imgur.com/Vhy354z.png" alt="Comparison of both approaches with varying problem sizes"><br>From the above plot, it can be observed that for small to moderate size problems, dynamic programming approach is very competitive against integer programming approach. As the size of problem increase, the solution time of both algorithms increases. With the experiment setup, it seems there is no clear advantage of one algorithm to ther other.</p>
+<h3 id="The-impact-of-knapsack-constraint-tightness-on-performance"><a href="#The-impact-of-knapsack-constraint-tightness-on-performance" class="headerlink" title="The impact of knapsack constraint tightness on performance"></a>The impact of knapsack constraint tightness on performance</h3><p>Another factor we look at is the tightness of the knapsack constraint. A tight constraint means most of the items will not be selected, where a loose constraint means most of the items will end up being selected. This directly affects the lookup table size for dynamic programming. We generate random instances of knapsack problems with 100 items which has random weight and utility scores in the range of 0 to 100. We run each algorithm 7 times on each different weight threshold, which ranges from 50 to 950, and record the average solution time in seconds. The results can be seen from the table below:</p>
+<p><img src="https://i.imgur.com/y36RVns.png" alt="Comparison of both approaches with varying knapsack constraint tightness"></p>
+<p>From the plot one can see that, as the weight threshold increase, the solution time increases with the dynamic programming approach, while integer programming seems to not be affected as much. This is because dynamic programming’s table size and number of iteration is directly proportional to the weight threshold, while integer programming is more directly affected by the number of integer variables and constraints, so in this case the constraint tightness does not have a huge impact on the solution time of integer programming.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>From the experiments we can see that, for tightly constraint knapsack problems, dynamic programming can be a solid choice, as its efficiency is competitive against integer programming, but does not require a model set up and calling an external solver. Plus dynamic programming has the bonus of the lookup table, which contains optimal solutions of the knapsack problem with different parameters. </p>
+<p>On the other hand, the integer programming approach is better if the problem size is large and the knapsack constraint is not very tight. Integer program is not affected as much when the tightness of the knapsack constraint changes. Dynamic programming does have the drawback of not being scale invariant, which means if we multiply the weights and the weight threshold all by the same factor, the solution time will increase as well since the lookup table size is <code>weight threshold</code> * <code>number of items</code>. As a side note, integer program solvers also has more weapons in its arsenal for finding a feasible solution faster and refining the bounds more efficiently. One example is a lot of solvers has builtin heurisitics that searches for feasible solutions, and builtin cuts which tightens the bounds.</p>
+<p>Hopefully this answers the question of when should we use which approach. If you are familiar with the column generation approach in the field of optimization, you will know that knapsack problem is often a subproblem that we need to solve efficiently. In the literatures, the knapsack problem is always solved with dynamic programming, which has always made me wonder. With all the analysis, I think the choice is due to the fact that the knapsack problem is usually smaller in size and tightly constrained. Hopefully this attracts more people who is interested in optimization, and provided good insights on how each algorithm works to find the optimal solution. </p>
+<p>For readers who are interested in the knapsack problem, Google ORtools has more discussions <a target="_blank" rel="noopener" href="https://developers.google.com/optimization/bin/knapsack">here</a>, and there is also a <a target="_blank" rel="noopener" href="https://www.amazon.com/Knapsack-Problems-Hans-Kellerer/dp/3642073115">great book</a> on the same topic. </p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-programming/" rel="tag">dynamic programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/integer-programming/" rel="tag">integer programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/optimization/" rel="tag">optimization</a></li></ul></div><div class="post-nav"><a class="pre" href="/2021/11/30/intro-to-linear-regression/">Introduction To Linear Regression: All You Need To Know About Linear Regression</a><a class="next" href="/2019/12/23/Another-way-to-better-organize-Pandas-code/">Another way to better organize Pandas code</a></div><link rel="stylesheet" type="text/css" href="https://unpkg.com/disqusjs@1.3/dist/disqusjs.css"><script type="text/javascript" src="https://unpkg.com/disqusjs@1.3/dist/disqus.js"></script><script type="text/javascript" id="disqus-count-script">$(function() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '//disqus.com/next/config.json', true);
+  xhr.timeout = 2500;
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      $('.post-meta .post-comments-count').show();
+      var s = document.createElement('script');
+      s.id = 'dsq-count-scr';
+      s.src = 'https://wei-xia-com.disqus.com/count.js';
+      s.async = true;
+      (document.head || document.body).appendChild(s);
+    }
+  };
+  xhr.ontimeout = function () { xhr.abort(); };
+  xhr.send(null);
+});</script><div class="comments" id="disqus_thread"><script type="text/javascript">// Load comments with DisqusJS
+function loadComments() {
+  window.dsqjs = new DisqusJS({
+    shortname: 'wei-xia-com',
+    siteName: 'Wei\'s Sandbox',
+    identifier: '2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/',
+    url: 'https://xiawei918.github.io/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/',
+    title: 'Dynamic program vs integer program: which one is better for knapsack problem?',
+    api: '',
+    apikey: '',
+    admin: '',
+    adminLabel: ''
+  });
+}
+// Lazy load {# Credit: https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/comments/disqus.swig #}
+(function () {
+  var offsetTop = document.getElementById('disqus_thread').offsetTop - window.innerHeight;
+  if (offsetTop <= 0) {
+    // Load directly when there's no scrollbar
+    window.addEventListener('load', loadComments, false);
+  } else {
+    var disqusScroll = function () {
+      // offsetTop may changes because of manually resizing browser window or lazy loading images
+      var offsetTop = document.getElementById('disqus_thread').offsetTop - window.innerHeight;
+      var scrollTop = window.scrollY;
+
+      // Pre-load comments a bit? (margin or anything else)
+      if (offsetTop - scrollTop < 60) {
+        window.removeEventListener('scroll', disqusScroll);
+        loadComments();
+      }
+    };
+    window.addEventListener('scroll', disqusScroll);
+  }
+})();
+// Scroll to comments automatically if #comment-xxx anchor specified
+window.addEventListener('load', function () {
+  // I don't know why, it just works.
+  window.setTimeout(function () {
+    if (location.hash.indexOf('#comment-') !== -1) {
+      document.getElementById('disqus_thread').scrollIntoView(true);
+    }
+  }, 100);
+}, false);
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://xiawei918.github.io"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="About"><img class="nofancybox" src="/img/head.jpg"/></a><p>明天是复杂的漫游</p><a class="info-icon" href="mailto:xiawei91827149@gmail.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/xiawei918" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-alt" style="margin-inline:5px"></i></a><a class="info-icon" href="https://www.zhihu.com/people/xia-wei-16" title="知乎" target="_blank" style="margin-inline:5px"> <i class="fa fa-question-circle" style="margin-inline:5px"></i></a><a class="info-icon" href="https://www.linkedin.com/in/weixia2/" title="豆瓣" target="_blank" style="margin-inline:5px"> <i class="fa fa-linkedin-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/data/" style="font-size: 15px;">data</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/optimization/" style="font-size: 15px;">optimization</a> <a href="/tags/dynamic-programming/" style="font-size: 15px;">dynamic programming</a> <a href="/tags/integer-programming/" style="font-size: 15px;">integer programming</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Linear-Regression/" style="font-size: 15px;">Linear Regression</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/11/30/intro-to-linear-regression/">Introduction To Linear Regression: All You Need To Know About Linear Regression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/">Dynamic program vs integer program: which one is better for knapsack problem?</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/Another-way-to-better-organize-Pandas-code/">Another way to better organize Pandas code</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/How-to-efficiently-loop-through-Pandas-DataFrame/">How to efficiently loop through Pandas DataFrame</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/02/Build-your-own-blog-with-Hexo/">Build your own blog with Hexo</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/23/hello-world/">Welcome</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//wei-xia-com.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://lizic.com/" title="Cartesian Skepticism" target="_blank">Cartesian Skepticism</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/." rel="nofollow">Wei's Sandbox.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>
