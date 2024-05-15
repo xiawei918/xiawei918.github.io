@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>python-for-algo-trading | Wei's Sandbox</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script src="https://www.googletagmanager.com/gtag/js?id=UA-153165207-1" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-153165207-1');
+</script><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><div class="darkmode-toggle">🌓</div><script>var prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+var toggle = document.querySelector('.darkmode-toggle');
+var html = document.querySelector('html');
+
+html.dataset.dark = localStorage.dark || prefersDarkMode.matches;
+
+toggle.addEventListener('click', () => {
+localStorage.dark = !(html.dataset.dark == 'true');
+html.dataset.dark = localStorage.dark;
+});</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">python-for-algo-trading</h1><a id="logo" href="/.">Wei's Sandbox</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a target="_blank" rel="noopener" href="https://minidailyblog.com/author/xePrKjel1GWpjHQdlKLbgsC8AYm2"><i class="fa fa-book"> Daily Blog</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about-me/"><i class="fa fa-user"> About</i></a><a href="/friends/"><i class="fa fa-link"> Links</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">python-for-algo-trading</h1><div class="post-meta">2024-05-14<span> | </span><span class="category"><a href="/categories/Notes/">Notes</a></span></div><a class="disqus-comment-count" data-disqus-identifier="2024/05/14/python-for-algo-trading/" href="/2024/05/14/python-for-algo-trading/#disqus_thread"></a><div class="post-content"><p>Reading notes for the book <a target="_blank" rel="noopener" href="https://www.amazon.com/Python-Algorithmic-Trading-Cloud-Deployment/dp/149205335X">Python for Algorithmic Trading</a>.</p>
+<p><img src="https://i.imgur.com/P2E8pgZ.jpg" alt="Python For Algo Trading Book Cover"></p>
+<h2 id="Chapter-1-Python-and-Algorithmic-Trading"><a href="#Chapter-1-Python-and-Algorithmic-Trading" class="headerlink" title="Chapter 1 Python and Algorithmic Trading"></a>Chapter 1 Python and Algorithmic Trading</h2><p>The Python programming language originated in 1991 and quick became widely adopted in 2011. The finance industry was mostly built on C and C++ which are really fast at execution as they are complied. In 2006, Numpy was released, which uses specialization to avoid overhead and achieved as good and fast as possible in certain scenarios. Then came Scipy and Pandas, all of which contributed to its success of Python in finance.</p>
+<h4 id="Algorithmic-Trading"><a href="#Algorithmic-Trading" class="headerlink" title="Algorithmic Trading"></a>Algorithmic Trading</h4><p><strong>Algorithmic trading</strong>, on a basic level, refers to the trading of financial instruments based on an algorithm.</p>
+<p>The objective of financial trading includes but not limited to the following:</p>
+<ul>
+<li>Beta trading: Earning market risk premia by investing in, for instance, ETFs that replicate the performance that of the S&amp;P 500.</li>
+<li>Alpha generation: Earning risk premia independent of the market by longing and shorting at the same time.</li>
+<li>Static hedging: Hedging against market risks by buying, for example, out-of-the-money put options on the S&amp;P 500.</li>
+<li>Dynamic hedging: Hedging against market risks affecting options.</li>
+<li>Asset-liability management: Trading S&amp;P 500 stocks and ETFs to be able to cover liabilities resulting from, for example, writing life insurance policeys.</li>
+<li>Market making: Providing, for exmaple, liquidity to options on the S&amp;P 500 by buying and selling options at different bid and ask prices.</li>
+</ul>
+<p>The book focuses on algorithmic trading in the context of <em>alpha generating strategies</em>. <em>alpha</em> is seen as the difference between a trading strategy’s return over some period of time and the return of the benchmark (single stock, index, etc).</p>
+<p>There are other areas where trading-related algorithms play an important role. One is the <em>high frequency trading</em> (HFT) space, where speed is key. Another one is <em>trade execution</em>, where algorithms are deployed to optimally execute certain nonstandard trades.</p>
+<h4 id="Trading-Strategies"><a href="#Trading-Strategies" class="headerlink" title="Trading Strategies"></a>Trading Strategies</h4><p>Four different algorithmic trading strategies are used as examples in the book. All these strategies can be classified as mainly <em>alpha seeking strategies</em>, since their main objective is to generate positive, above-market returns independent of the market direction.</p>
+<ul>
+<li>Simple Moving Averages</li>
+<li>Momentum</li>
+<li>Mean Reversion</li>
+<li>Machine and Deep Learning</li>
+</ul>
+<h2 id="Chapter-2-Python-Infrastructure"><a href="#Chapter-2-Python-Infrastructure" class="headerlink" title="Chapter 2 Python Infrastructure"></a>Chapter 2 Python Infrastructure</h2><p>to be continued</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Finance/" rel="tag">Finance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/" rel="tag">Notes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Trading/" rel="tag">Trading</a></li></ul></div><div class="post-nav"><a class="next" href="/2024/05/12/algorithmic-trading-notes/">Algorithmic Trading Notes</a></div><link rel="stylesheet" type="text/css" href="https://unpkg.com/disqusjs@1.3/dist/disqusjs.css"><script type="text/javascript" src="https://unpkg.com/disqusjs@1.3/dist/disqus.js"></script><script type="text/javascript" id="disqus-count-script">$(function() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '//disqus.com/next/config.json', true);
+  xhr.timeout = 2500;
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      $('.post-meta .post-comments-count').show();
+      var s = document.createElement('script');
+      s.id = 'dsq-count-scr';
+      s.src = 'https://wei-xia-com.disqus.com/count.js';
+      s.async = true;
+      (document.head || document.body).appendChild(s);
+    }
+  };
+  xhr.ontimeout = function () { xhr.abort(); };
+  xhr.send(null);
+});</script><div class="comments" id="disqus_thread"><script type="text/javascript">// Load comments with DisqusJS
+function loadComments() {
+  window.dsqjs = new DisqusJS({
+    shortname: 'wei-xia-com',
+    siteName: 'Wei\'s Sandbox',
+    identifier: '2024/05/14/python-for-algo-trading/',
+    url: 'https://xiawei918.github.io/2024/05/14/python-for-algo-trading/',
+    title: 'python-for-algo-trading',
+    api: '',
+    apikey: '',
+    admin: '',
+    adminLabel: ''
+  });
+}
+// Lazy load {# Credit: https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/comments/disqus.swig #}
+(function () {
+  var offsetTop = document.getElementById('disqus_thread').offsetTop - window.innerHeight;
+  if (offsetTop <= 0) {
+    // Load directly when there's no scrollbar
+    window.addEventListener('load', loadComments, false);
+  } else {
+    var disqusScroll = function () {
+      // offsetTop may changes because of manually resizing browser window or lazy loading images
+      var offsetTop = document.getElementById('disqus_thread').offsetTop - window.innerHeight;
+      var scrollTop = window.scrollY;
+
+      // Pre-load comments a bit? (margin or anything else)
+      if (offsetTop - scrollTop < 60) {
+        window.removeEventListener('scroll', disqusScroll);
+        loadComments();
+      }
+    };
+    window.addEventListener('scroll', disqusScroll);
+  }
+})();
+// Scroll to comments automatically if #comment-xxx anchor specified
+window.addEventListener('load', function () {
+  // I don't know why, it just works.
+  window.setTimeout(function () {
+    if (location.hash.indexOf('#comment-') !== -1) {
+      document.getElementById('disqus_thread').scrollIntoView(true);
+    }
+  }, 100);
+}, false);
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://xiawei918.github.io"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about-me/" title="About"><img class="nofancybox" src="/img/head.jpg"/></a><p>明天是复杂的漫游</p><a class="info-icon" href="mailto:xiawei91827149@gmail.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/xiawei918" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-alt" style="margin-inline:5px"></i></a><a class="info-icon" href="https://www.zhihu.com/people/xia-wei-16" title="知乎" target="_blank" style="margin-inline:5px"> <i class="fa fa-graduation-cap" style="margin-inline:5px"></i></a><a class="info-icon" href="https://www.linkedin.com/in/weixia2/" title="Linkedin" target="_blank" style="margin-inline:5px"> <i class="fa fa-linkedin-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Life/" style="font-size: 15px;">Life</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Pandas/" style="font-size: 15px;">Pandas</a> <a href="/tags/Data/" style="font-size: 15px;">Data</a> <a href="/tags/Optimization/" style="font-size: 15px;">Optimization</a> <a href="/tags/Dynamic-Programming/" style="font-size: 15px;">Dynamic Programming</a> <a href="/tags/Integer-Programming/" style="font-size: 15px;">Integer Programming</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/Flask/" style="font-size: 15px;">Flask</a> <a href="/tags/Programming/" style="font-size: 15px;">Programming</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Linear-Regression/" style="font-size: 15px;">Linear Regression</a> <a href="/tags/Notes/" style="font-size: 15px;">Notes</a> <a href="/tags/Trading/" style="font-size: 15px;">Trading</a> <a href="/tags/Finance/" style="font-size: 15px;">Finance</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2024/05/14/python-for-algo-trading/">python-for-algo-trading</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/05/12/algorithmic-trading-notes/">Algorithmic Trading Notes</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/12/31/2023%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/">2023年度总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/03/deploy-flask-website-on-ec2-with-docker-compose2/">Deploy Flask Website On EC2 With Docker Compose [Part 2]</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/01/cycling/">从骑车看卷文化与结果导向</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/28/deploy-flask-website-on-ec2-with-docker-compose/">Deploy Flask Website On EC2 With Docker Compose [Part 1]</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/25/exploring-side-project-ideas/">Exploring Side Project Ideas</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/30/intro-to-linear-regression/">Introduction To Linear Regression: All You Need To Know About Linear Regression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/19/Dynamic-program-vs-integer-program-which-one-is-better-for-knapsack-problem/">Dynamic program vs integer program: which one is better for knapsack problem?</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/Another-way-to-better-organize-Pandas-code/">Another way to better organize Pandas code</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> Recent Comments</i></div><script type="text/javascript" src="//wei-xia-com.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://lizic.com/" title="Cartesian Skepticism" target="_blank">Cartesian Skepticism</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2024 <a href="/." rel="nofollow">Wei's Sandbox.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>
